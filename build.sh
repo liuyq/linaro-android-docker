@@ -7,4 +7,9 @@ docker build --tag linaro-android:0.1 . -f Dockerfile  # --tag is to define the 
 # docker run --interactive --tty linaro-android:0.1 bash # name will be generated automatically
 # docker image ls # list docker images
 # docker ps --all # list containers
+# docker login
+# docker tag <local-repository-name>:<local-tag> <Your-DockerID>/<remote-repository-name>:<remote-tag>
+# local repository name and tag could be checked from the output of docker image ls command
+# docker tag linaro-android:0.1 yongqinliu/linaro-android-docker:0.1
+# docker push <Your-DockerID>/<remote-repository-name>:<remote-tag>
 
