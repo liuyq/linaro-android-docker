@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# https://docs.docker.com/engine/install/ubuntu/
+# https://hub.docker.com/repository/docker/yongqinliu/linaro-android-docker
+# https://github.com/liuyq/linaro-android-docker
+# https://docs.docker.com/engine/reference/builder/#add
+
 #docker build --tag bulletinboard:1.0 .
 #docker run --publish 8000:8080 --detach --name bb bulletinboard:1.0
 #docker build --tag linaro-android:0.1 . -f Dockerfile  # --tag is to define the image name
