@@ -26,7 +26,8 @@
 docker build --tag yongqinliu/linaro-android-docker:0.1 . -f Dockerfile  # --tag is to define the image name
 # docker run --name test-android yongqinliu/linaro-android-docker:0.1 # --name is used to specified the container name
 # docker run --rm --init --interactive --device=/dev/bus/usb/003/003  --tty --rm yongqinliu/linaro-android-docker:0.1 bash # name will be generated automatically
-# docker run --rm --init --interactive --tty --mount=type=bind,source=/SATA3/srv/test-definitions-github/,destination=/lava --device=/dev/bus/usb/003/010 yongqinliu/linaro-android-docker:0.1 bash
+# docker run --rm --init --interactive --tty --mount=type=bind,source=/SATA3/srv/test-definitions-github/,destination=/lava --device=/dev/bus/usb/003/010 '--env=PS1=docker-test-shell:$ ' yongqinliu/linaro-android-docker:0.1 bash --norc -i
+# docker run --rm --init --interactive --name=lava-docker-test-shell-2198961-5.3 --hostname=lava --mount=type=bind,source=/SATA3/srv/test-definitions-github,destination=/lava --device=/dev/bus/usb/003/019 '--env=PS1=docker-test-shell:$ ' yongqinliu/linaro-android-docker:0.1 bash --norc -i
 #   # cd /lava/automated/android/boottime
 #   # ./boottime.sh -S true -s "" -t 300 -o COLLECT -n 1 -v ""
 #   # --rm remove automatically when exit
