@@ -8,6 +8,7 @@ RUN apt-get update && apt-get install -y apt-utils unzip wget git sudo usbutils 
 
 #RUN apt-get install libc6:i386 libstdc++6:i386 libgcc1:i386 zlib1g:i386 libncurses5:i386
 
+# https://developer.android.com/studio/releases/platform-tools
 ADD https://dl.google.com/android/repository/platform-tools_r28.0.0-linux.zip .
 RUN unzip platform-tools_r28.0.0-linux.zip
 RUN rm -f /usr/bin/fastboot /usr/bin/adb && ln -s /linaro-android/platform-tools/fastboot /usr/bin/fastboot && ln -s /linaro-android/platform-tools/adb /usr/bin/adb
