@@ -40,3 +40,27 @@ docker build --tag yongqinliu/linaro-android-docker:0.1 . -f Dockerfile  # --tag
 # docker tag linaro-android:0.1 yongqinliu/linaro-android-docker:0.1
 # docker push <Your-DockerID>/<remote-repository-name>:<remote-tag>
 
+exit
+# error 1:
+#    22:15:21 liuyq:linaro-android-docker$ docker run hello-world
+#    Unable to find image 'hello-world:latest' locally
+#    latest: Pulling from library/hello-world
+#    93288797bd35: Pull complete
+#    Digest: sha256:507ecde44b8eb741278274653120c2bf793b174c06ff4eaa672b713b3263477b
+#    Status: Downloaded newer image for hello-world:latest
+#    docker: Error response from daemon: failed to create endpoint awesome_mcclintock on network bridge: failed to add the host (vethde17a27) <=> sandbox (veth2d2a4ef) pair interfaces: operation not supported.
+#    ERRO[0024] error waiting for container: context canceled
+#    22:16:03 liuyq:linaro-android-docker$
+# solution:
+#    https://flutterq.com/docker-error-response-from-daemon-failed-to-create-endpoint-priceless_noether-on-network-bridge/
+#    https://stackoverflow.com/questions/69780128/docker-error-response-from-daemon-failed-to-create-endpoint-priceless-noether
+#    The vent kernel module is not installed. If you do: sudo apt install linux-modules-extra-raspi
+#    $ sudo apt install linux-modules-extra-raspi
+#    $ sudo reboot
+# install lava instance:
+#    https://git.lavasoftware.org/lava/pkg/docker-compose
+#    https://linaro.atlassian.net/wiki/spaces/LIPUB/pages/18852151302/Getting+Started+with+LAVA+Docker+and+a+FRDM-K64F
+#    https://github.com/danrue/lava.therub.org
+#    https://therub.org/2019/03/01/lava-docker-compose/
+#    https://www.youtube.com/watch?v=3SHNhiCb5-4
+#    https://elinux.org/images/8/86/Bootstraping_Local_KernelCI.pdf
