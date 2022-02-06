@@ -1,0 +1,27 @@
+# Use the official image as a parent image.
+FROM debian:stable
+ENV ARCH=arm64
+
+# set working dir
+WORKDIR /linaro-android
+
+# Err:26 http://deb.debian.org/debian stable/main arm64 qemu-user-static arm64 1:5.2+dfsg-11+deb11u1
+#   Connection timed out [IP: 151.101.2.132 80]
+# Fetched 8438 kB in 29min 39s (4741 B/s)
+# E: Failed to fetch http://security.debian.org/debian-security/pool/updates/main/q/qemu/qemu-user-static_5.2%2bdfsg-11%2bdeb11u1_arm64.deb  Connection timed out [IP: 151.101.2.132 80]
+# E: Unable to fetch some archives, maybe run apt-get update or try with --fix-missing?
+# The command '/bin/sh -c dpkg --add-architecture amd64 && apt-get update --fix-missing && apt-get install -y qemu-user-static libc6:amd64 wget' returned a non-zero code: 100
+RUN dpkg --add-architecture amd64 # && apt-get update --fix-missing && apt-get install -y qemu-user-static libc6:amd64 wget
+RUN apt-get update --fix-missing
+RUN apt-get install -y qemu-user-static libc6:amd64 wget unzip
+#ADD http://git.linaro.org/people/yongqin.liu/public/android.git/plain/host-tools/download_throttled.sh .
+ADD download_throttled.sh .
+RUN chmod +x download_throttled.sh
+
+#RUN dpkg --add-architecture i386
+#RUN apt-get update --fix-missing && apt-get install libc6:i386 libstdc++6:i386 libgcc1:i386 zlib1g:i386 libncurses5:i386
+
+# https://developer.android.com/studio/releases/platform-tools
+ADD https://dl.google.com/android/repository/platform-tools_r28.0.0-linux.zip .
+RUN unzip platform-tools_r28.0.0-linux.zip
+RUN rm -f /usr/bin/fastboot /usr/bin/adb && ln -s /linaro-android/platform-tools/fastboot /usr/bin/fastboot && ln -s /linaro-android/platform-tools/adb /usr/bin/adb
