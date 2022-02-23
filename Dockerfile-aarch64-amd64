@@ -1,0 +1,53 @@
+## docker build --tag yongqinliu/linaro-android-docker:0.1-aarch64 . -f Dockerfile-aarch64-amd64 
+## docker run --rm --init --interactive --privileged yongqinliu/linaro-android-docker:0.1-aarch64 bash  --norc -i
+
+## https://docs.nvidia.com/datacenter/cloud-native/playground/x-arch.html
+## https://github.com/multiarch/qemu-user-static
+## https://github.com/multiarch/qemu-user-static/blob/master/containers/latest/Dockerfile
+## https://github.com/multiarch/qemu-user-static/blob/master/containers/latest/register.sh
+## https://raw.githubusercontent.com/qemu/qemu/e75941331e4cdc05878119e08635ace437aae721/scripts/qemu-binfmt-conf.sh
+## https://yi-jyun.blogspot.com/2018/04/linux-binfmtmisc-binfmt-module.html
+## https://junsun.net/wordpress/tag/qmeu/
+
+## Goal:
+##    1. possible to run adb and fastboot for android deployment
+##    2. possible to run ota tools for packages download
+##    3. possible to run the aosp master cts/vts test
+# Use the official image as a parent image.
+FROM ubuntu:21.10
+
+# Set the working directory.
+WORKDIR /linaro-android
+
+# need to be put before the first RUN, not the first line of the Dockerfile
+# Otherwise "Error response from daemon: no build stage in current context" will be reported
+ENV DEBIAN_FRONTEND=noninteractive
+ADD sources.list-21.10 /etc/apt/sources.list
+RUN apt-get update -y
+RUN apt-get install -y qemu-user-static binfmt-support
+## if there is no /proc/sys/fs/binfmt_misc, it means
+## there is no binfmt support in the kernel,need to run
+##     '/sbin/modprobe binfmt_misc'
+## from the host
+## need to run docker with --privileged to run binfmt_misc
+## otherwise, "permission denied" will be reported when mount binfmt_misc
+##    docker run --rm --init --interactive --privileged yongqinliu/linaro-android-docker:0.1-aarch64 bash  --norc -i
+## if there is no /proc/sys/fs/binfmt_misc/register, need to run
+##    mount binfmt_misc -t binfmt_misc /proc/sys/fs/binfmt_misc
+RUN update-binfmts --display
+RUN ls -l /proc/sys/fs/binfmt_misc
+# no such file
+#RUN cat /proc/sys/fs/binfmt_misc/qemu-aarch64
+RUN dpkg --add-architecture amd64
+RUN apt-get update -y --fix-missing
+RUN apt-get install -y libc6:amd64
+
+#RUN apt-get update && apt-get install -y apt-utils unzip wget git sudo usbutils curl tar xz-utils libcurl4 coreutils zip python-lxml python-setuptools aapt lib32z1-dev libc6-dev-i386 lib32gcc1 python-dev python-protobuf protobuf-compiler python-virtualenv python-pip python-pexpect psmisc openjdk-8-jdk-headless openjdk-11-jdk-headless
+RUN apt-get update && apt-get install -y apt-utils unzip wget git sudo usbutils curl tar xz-utils libcurl4 coreutils zip python-setuptools aapt lib32z1-dev libc6-dev-i386 python-dev protobuf-compiler psmisc openjdk-8-jdk-headless openjdk-11-jdk-headless python-pexpect-doc python3-pip lib32gcc-s1:amd64 # python-lxml python-protobuf python-virtualenv
+
+#RUN apt-get install libc6:i386 libstdc++6:i386 libgcc1:i386 zlib1g:i386 libncurses5:i386
+
+# https://developer.android.com/studio/releases/platform-tools
+ADD https://dl.google.com/android/repository/platform-tools_r28.0.0-linux.zip .
+RUN unzip platform-tools_r28.0.0-linux.zip
+RUN rm -f /usr/bin/fastboot /usr/bin/adb && ln -s /linaro-android/platform-tools/fastboot /usr/bin/fastboot && ln -s /linaro-android/platform-tools/adb /usr/bin/adb

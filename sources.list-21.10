@@ -1,0 +1,24 @@
+deb [arch=arm64,armhf] http://ports.ubuntu.com/ubuntu-ports/ impish main restricted
+deb [arch=arm64,armhf] http://ports.ubuntu.com/ubuntu-ports/ impish universe
+deb [arch=arm64,armhf] http://ports.ubuntu.com/ubuntu-ports/ impish multiverse
+deb [arch=arm64,armhf] http://ports.ubuntu.com/ubuntu-ports/ impish-updates main restricted
+deb [arch=arm64,armhf] http://ports.ubuntu.com/ubuntu-ports/ impish-updates universe
+deb [arch=arm64,armhf] http://ports.ubuntu.com/ubuntu-ports/ impish-updates multiverse
+deb [arch=arm64,armhf] http://ports.ubuntu.com/ubuntu-ports/ impish-backports main restricted universe multiverse
+
+deb [arch=arm64,armhf] http://ports.ubuntu.com/ubuntu-ports/ impish-security main restricted
+deb [arch=arm64,armhf] http://ports.ubuntu.com/ubuntu-ports/ impish-security universe
+deb [arch=arm64,armhf] http://ports.ubuntu.com/ubuntu-ports/ impish-security multiverse
+
+deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ impish main restricted
+deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ impish universe
+deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ impish multiverse
+deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ impish-updates main restricted
+deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ impish-updates universe
+deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ impish-updates multiverse
+deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ impish-backports main restricted universe multiverse
+
+deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ impish-security main restricted
+deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ impish-security universe
+deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ impish-security multiverse
+
