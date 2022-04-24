@@ -21,6 +21,8 @@ WORKDIR /linaro-android
 
 # need to be put before the first RUN, not the first line of the Dockerfile
 # Otherwise "Error response from daemon: no build stage in current context" will be reported
+# or add  DEBIAN_FRONTEND=noninteractiv before the command for the RUN
+# to avoid the "Configuring tzdata" interaction
 ENV DEBIAN_FRONTEND=noninteractive
 ADD sources.list-21.10 /etc/apt/sources.list
 RUN dpkg --add-architecture amd64
