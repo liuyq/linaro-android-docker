@@ -12,6 +12,11 @@
 #   $ sudo groupadd docker
 #   $ sudo usermod -aG docker $USER
 #   $ newgrp docker
+#   # docker: Error response from daemon: failed to create endpoint charming_dirac on network bridge: failed to add the host (veth1277202) <=> sandbox (veth3344514) pair interfaces: operation not supported.
+#   # ERRO[0009] error waiting for container: context canceled
+#   # https://www.mail-archive.com/ubuntu-bugs@lists.ubuntu.com/msg5968593.html
+#   $ sudo apt install linux-modules-extra-raspi # for 21.10 with RPi4
+#   $ docker run hello-world
 #   TO UNINSTALL
 #   $ sudo apt-get purge docker-ce docker-ce-cli containerd.io
 
